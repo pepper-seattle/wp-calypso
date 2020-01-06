@@ -101,10 +101,6 @@ function setup() {
 		app.use( require( 'devdocs' )() );
 	}
 
-	if ( config.isEnabled( 'storybook' ) ) {
-		app.use( require( 'storybook' ) );
-	}
-
 	if ( config.isEnabled( 'desktop' ) ) {
 		app.use(
 			'/desktop',
