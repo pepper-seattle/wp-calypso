@@ -52,6 +52,7 @@ class CancelPurchase extends React.Component {
 		includedDomainPurchase: PropTypes.object,
 		purchase: PropTypes.object,
 		purchaseId: PropTypes.number.isRequired,
+		selectedSite: PropTypes.oneOfType( [ PropTypes.bool, PropTypes.object ] ),
 		siteSlug: PropTypes.string.isRequired,
 		userId: PropTypes.number,
 	};
@@ -215,6 +216,7 @@ class CancelPurchase extends React.Component {
 						purchase={ purchase }
 						includedDomainPurchase={ this.props.includedDomainPurchase }
 						disabled={ this.state.cancelBundledDomain && ! this.state.confirmCancelBundledDomain }
+						selectedSite={ this.props.selectedSite }
 						siteSlug={ this.props.siteSlug }
 						cancelBundledDomain={ this.state.cancelBundledDomain }
 					/>
