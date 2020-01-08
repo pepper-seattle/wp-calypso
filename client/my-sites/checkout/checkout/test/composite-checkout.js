@@ -110,8 +110,8 @@ test( 'When we enter checkout, the line items and total are rendered', async () 
 					createPayPalMethod( {
 						registerStore: registerStore,
 						submitTransaction: mockPayPalExpressRequest,
-						successUrl: '#',
-						cancelUrl: '#',
+						getSuccessUrl: () => '#',
+						getCancelUrl: () => '#',
 					} ),
 				] }
 				registry={ registry }

@@ -105,8 +105,8 @@ const applePayMethod = isApplePayAvailable()
 const paypalMethod = createPayPalMethod( {
 	registerStore,
 	submitTransaction: makePayPalExpressRequest,
-	successUrl: '#',
-	cancelUrl: '#',
+	getSuccessUrl: () => '#',
+	getCancelUrl: () => '#',
 } );
 
 export function isApplePayAvailable() {

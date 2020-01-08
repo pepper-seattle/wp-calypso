@@ -284,19 +284,19 @@ function useCreatePaymentMethods() {
 	const paypalMethod = useMemo(
 		() =>
 			createPayPalMethod( {
-				successUrl: `/checkout/thank-you/${ select( 'wpcom' )?.getSiteId?.() }/`, // TODO: get the correct redirect URL
-				cancelUrl: window.location.href,
+				getSuccessUrl: () => `/checkout/thank-you/${ select( 'wpcom' )?.getSiteId?.() ?? '' }`, // TODO: get the correct redirect URL
+				getCancelUrl: () => window.location.href,
 				registerStore: registerStore,
 				submitTransaction: submitData =>
 					makePayPalExpressRequest( {
 						...submitData,
-						siteId: select( 'wpcom' )?.getSiteId?.(),
+						siteId: select( 'wpcom' )?.getSiteId?.() ?? '',
 						domainDetails: getDomainDetails(),
 						couponId: null, // TODO: get couponId
-						country: select( 'wpcom' )?.getContactInfo?.()?.country?.value,
-						postalCode: select( 'wpcom' )?.getContactInfo?.()?.postalCode?.value,
-						subdivisionCode: select( 'wpcom' )?.getContactInfo?.()?.state?.value,
-						phoneNumber: select( 'wpcom' )?.getContactInfo?.()?.phoneNumber?.value,
+						country: select( 'wpcom' )?.getContactInfo?.()?.country?.value ?? '',
+						postalCode: select( 'wpcom' )?.getContactInfo?.()?.postalCode?.value ?? '',
+						subdivisionCode: select( 'wpcom' )?.getContactInfo?.()?.state?.value ?? '',
+						phoneNumber: select( 'wpcom' )?.getContactInfo?.()?.phoneNumber?.value ?? '',
 					} ),
 			} ),
 		[]
