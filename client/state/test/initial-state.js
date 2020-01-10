@@ -502,7 +502,7 @@ describe( 'initial-state', () => {
 	} );
 
 	describe( '#persistOnChange()', () => {
-		let store, clock, setStoredItemSpy;
+		let store, clock, setStoredItemSpy, clearStorageSpy;
 
 		const dataReducer = ( state = null, { data } ) => {
 			if ( data && data !== state ) {
@@ -531,6 +531,13 @@ describe( 'initial-state', () => {
 			// we use fake timers from Sinon (aka Lolex) because `lodash.throttle` also uses `Date.now()`
 			// and relies on it returning a mocked value. Jest fake timers don't mock `Date`, Lolex does.
 			clock = useFakeTimers();
+			clearStorageSpy = jest.spyOn( browserStorage, 'clearStorage' ).mockImplementation( () => {
+				return {
+					then( fn ) {
+						fn();
+					},
+				};
+			} );
 			setStoredItemSpy = jest
 				.spyOn( browserStorage, 'setStoredItem' )
 				.mockImplementation( value => Promise.resolve( value ) );
@@ -542,6 +549,7 @@ describe( 'initial-state', () => {
 		afterEach( () => {
 			isEnabled.enablePersistRedux();
 			clock.restore();
+			clearStorageSpy.mockRestore();
 			setStoredItemSpy.mockRestore();
 		} );
 
@@ -553,7 +561,7 @@ describe( 'initial-state', () => {
 
 			clock.tick( SERIALIZE_THROTTLE );
 
-			expect( setStoredItemSpy ).toHaveBeenCalledTimes( 1 );
+			expect( clearStorageSpy ).toHaveBeenCalledTimes( 1 );
 		} );
 
 		test( 'should not persist invalid state', () => {
