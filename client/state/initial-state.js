@@ -193,13 +193,16 @@ export function persistOnChange( reduxStore ) {
 			const serializedState = serialize( state, reduxStore.getCurrentReducer() );
 			const _timestamp = Date.now();
 
-			const storeTasks = map( serializedState.get(), ( data, storageKey ) =>
-				persistentStoreState( reduxStateKey, storageKey, data, _timestamp )
-			);
+			// clear out storage first to prevent safari's WAL from growing forever
+			clearStorage().then( () => {
+				const storeTasks = map( serializedState.get(), ( data, storageKey ) =>
+					persistentStoreState( reduxStateKey, storageKey, data, _timestamp )
+				);
 
-			Promise.all( storeTasks ).catch( setError =>
-				debug( 'failed to set redux-store state', setError )
-			);
+				Promise.all( storeTasks ).catch( setError =>
+					debug( 'failed to set redux-store state', setError )
+				);
+			} );
 		},
 		SERIALIZE_THROTTLE,
 		{ leading: false, trailing: true }
@@ -218,7 +221,7 @@ async function getInitialStoredState( initialReducer ) {
 	}
 
 	if ( 'development' === process.env.NODE_ENV ) {
-		window.resetState = () => clearStorage().then( () => location.reload( true ) );
+		window.resetState = () => clearStorage().then( () => window.location.reload( true ) );
 
 		if ( shouldAddSympathy() ) {
 			// eslint-disable-next-line no-console
