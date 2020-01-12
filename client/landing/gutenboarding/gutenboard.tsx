@@ -3,12 +3,7 @@
  */
 import '@wordpress/editor'; // This shouldn't be necessary
 import { __ as NO__ } from '@wordpress/i18n';
-import {
-	BlockEditorProvider,
-	BlockList,
-	WritingFlow,
-	ObserveTyping,
-} from '@wordpress/block-editor';
+import { BlockEditorProvider, BlockList } from '@wordpress/block-editor';
 import {
 	Popover,
 	SlotFillProvider,
@@ -109,11 +104,7 @@ export function Gutenboard() {
 									aria-label={ NO__( 'Onboarding screen content' ) }
 									tabIndex={ -1 }
 								>
-									<WritingFlow>
-										<ObserveTyping>
-											<BlockList className="gutenboarding-block-list" />
-										</ObserveTyping>
-									</WritingFlow>
+									<BlockList className="gutenboarding-block-list" />
 								</div>
 							</div>
 							<div>
