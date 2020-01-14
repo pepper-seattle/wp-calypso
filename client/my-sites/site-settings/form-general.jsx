@@ -41,7 +41,7 @@ import { isCurrentUserEmailVerified } from 'state/current-user/selectors';
 import { launchSite } from 'state/sites/launch/actions';
 import { getDomainsBySiteId } from 'state/sites/domains/selectors';
 import QuerySiteDomains from 'components/data/query-site-domains';
-import FormInputCheckbox from '../../components/forms/form-checkbox';
+import FormInputCheckbox from 'components/forms/form-checkbox';
 
 export class SiteSettingsFormGeneral extends Component {
 	componentDidMount() {
