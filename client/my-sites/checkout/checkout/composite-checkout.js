@@ -43,14 +43,6 @@ import ContactDetailsFormFields from 'components/domains/contact-details-form-fi
 
 const debug = debugFactory( 'calypso:composite-checkout' );
 
-const renderDomainFields = contactDetails => {
-	return (
-		<WPCheckoutErrorBoundary componentTitle="ContactDetailsFormFields">
-			<ContactDetailsFormFields contactDetails={ contactDetails } />;
-		</WPCheckoutErrorBoundary>
-	);
-};
-
 const registry = createRegistry();
 const { select } = registry;
 
@@ -61,6 +53,18 @@ const wpcom = wp.undocumented();
 const wpcomGetCart = ( ...args ) => wpcom.getCart( ...args );
 const wpcomSetCart = ( ...args ) => wpcom.setCart( ...args );
 const wpcomGetStoredCards = ( ...args ) => wpcom.getStoredCards( ...args );
+
+const renderDomainContactFields = ( contactDetails, updateContactDetails ) => {
+	return (
+		<WPCheckoutErrorBoundary componentTitle="ContactDetailsFormFields">
+			<ContactDetailsFormFields
+				// contactDetails={ contactDetails }
+				onContactDetailsChange={ updateContactDetails }
+			/>
+			;
+		</WPCheckoutErrorBoundary>
+	);
+};
 
 export default function CompositeCheckout( {
 	siteSlug,
@@ -194,7 +198,7 @@ export default function CompositeCheckout( {
 				countriesList={ countriesList }
 				PhoneInput={ PhoneInput }
 				StateSelect={ StateSelect }
-				renderDomainFields={ renderDomainFields }
+				renderDomainContactFields={ renderDomainContactFields }
 			/>
 		</CheckoutProvider>
 	);
