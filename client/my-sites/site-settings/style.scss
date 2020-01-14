@@ -321,7 +321,7 @@
 	&:not( :first-child ) {
 		margin-top: 15px;
 	}
-	&.is-checkbox {
+	&.is-checkbox:not( :only-child ) {
 		margin-left: 25px;
 	}
 }
