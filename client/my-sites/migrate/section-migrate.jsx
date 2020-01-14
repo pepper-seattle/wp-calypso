@@ -30,6 +30,8 @@ import { getSelectedSite, getSelectedSiteId, getSelectedSiteSlug } from 'state/u
 import isSiteAutomatedTransfer from 'state/selectors/is-site-automated-transfer';
 import wpLib from 'lib/wp';
 
+import ImportTypeChoice from './components/import-type-choice';
+
 /**
  * Style dependencies
  */
@@ -228,6 +230,7 @@ class SectionMigrate extends Component {
 				<HeaderCake backHref={ backHref }>Import { sourceSiteDomain }</HeaderCake>
 				<CompactCard>
 					<CardHeading>{ `Import everything from ${ sourceSiteDomain } to WordPress.com.` }</CardHeading>
+					<ImportTypeChoice />
 					<div className="migrate__confirmation">
 						We can move everything from your current site to this WordPress.com site. It will keep
 						working as expected, but your WordPress.com dashboard will be locked during the
