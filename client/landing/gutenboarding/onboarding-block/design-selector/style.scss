@@ -123,6 +123,7 @@ $design-selector-selection-space: 285px;
 }
 
 .page-layout-selector__item {
+	cursor: pointer;
 	position: relative;
 	overflow: hidden;
 	padding: 2px;
@@ -185,6 +186,7 @@ $design-selector-selection-space: 285px;
 
 	.design-selector__option-overlay {
 		background-color: rgba( var( --color-primary-rgb ), 0.8 );
+		cursor: pointer;
 		position: absolute;
 		top: 0;
 		right: 0;
