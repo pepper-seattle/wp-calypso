@@ -11,7 +11,7 @@ import classnames from 'classnames';
 /**
  * Internal dependencies
  */
-import { DomainSuggestions, CurrentUser } from '@automattic/data-stores';
+import { DomainSuggestions, User } from '@automattic/data-stores';
 import { STORE_KEY as ONBOARD_STORE } from '../../stores/onboard';
 import './style.scss';
 import DomainPickerButton from '../domain-picker-button';
@@ -34,7 +34,7 @@ interface KeyboardShortcut {
 	ariaLabel: string;
 }
 
-const CURRENT_USER_STORE = CurrentUser.register();
+const USER_STORE = User.register();
 
 const Header: FunctionComponent< Props > = ( {
 	isEditorSidebarOpened,
@@ -47,11 +47,11 @@ const Header: FunctionComponent< Props > = ( {
 		select( ONBOARD_STORE ).getState()
 	);
 	const { setDomain } = useDispatch( ONBOARD_STORE );
-	const { createAccount } = useDispatch( CURRENT_USER_STORE );
+	const { createAccount } = useDispatch( USER_STORE );
 	const [ email, setEmail ] = useState( '' );
 
-	const currentUser = useSelect( select => select( CURRENT_USER_STORE ).getCurrentUser() );
-	const newUser = useSelect( select => select( CURRENT_USER_STORE ).getNewUser() );
+	const currentUser = useSelect( select => select( USER_STORE ).getCurrentUser() );
+	const newUser = useSelect( select => select( USER_STORE ).getNewUser() );
 	const isLoggedIn = !! currentUser?.ID;
 	const isNewUser = !! newUser;
 
