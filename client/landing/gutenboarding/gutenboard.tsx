@@ -34,7 +34,6 @@ import { name, settings } from './onboarding-block';
 import { Slot as SidebarSlot } from './components/sidebar';
 import SettingsSidebar from './components/settings-sidebar';
 import { STORE_KEY } from './stores/onboard';
-import { CurrentUser } from '@automattic/data-stores';
 import { routes, Step } from './steps';
 import './style.scss';
 
@@ -48,16 +47,11 @@ const toggleSidebarShortcut = {
 
 registerBlockType( name, settings );
 
-const CURRENT_USER_STORE = CurrentUser.register();
-
 export function Gutenboard() {
 	const [ isEditorSidebarOpened, updateIsEditorSidebarOpened ] = useState( false );
 	const toggleGeneralSidebar = () => updateIsEditorSidebarOpened( isOpen => ! isOpen );
 
 	const { siteVertical } = useSelect( select => select( STORE_KEY ).getState() );
-
-	const currentUser = useSelect( select => select( CURRENT_USER_STORE ).getCurrentUser() );
-	const isLoggedIn = !! currentUser?.ID;
 
 	// @TODO: This is currently needed in addition to the routing (inside the Onboarding Block)
 	// for the 'Back' and 'Next' buttons in the header. If we remove those (and move navigation
@@ -104,7 +98,6 @@ export function Gutenboard() {
 							toggleSidebarShortcut={ toggleSidebarShortcut }
 							prev={ prev }
 							next={ next }
-							isLoggedIn={ isLoggedIn }
 						/>
 						<BlockEditorProvider
 							useSubRegistry={ false }

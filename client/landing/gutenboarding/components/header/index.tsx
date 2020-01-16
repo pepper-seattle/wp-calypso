@@ -2,16 +2,16 @@
  * External dependencies
  */
 import { __ as NO__ } from '@wordpress/i18n';
-import { Icon, IconButton } from '@wordpress/components';
+import { Icon, IconButton, Button, TextControl } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import classnames from 'classnames';
 
 /**
  * Internal dependencies
  */
-import { DomainSuggestions } from '@automattic/data-stores';
+import { DomainSuggestions, CurrentUser } from '@automattic/data-stores';
 import { STORE_KEY as ONBOARD_STORE } from '../../stores/onboard';
 import './style.scss';
 import DomainPickerButton from '../domain-picker-button';
@@ -26,7 +26,6 @@ interface Props {
 	prev?: string;
 	toggleGeneralSidebar: () => void;
 	toggleSidebarShortcut: KeyboardShortcut;
-	isLoggedIn?: boolean;
 }
 
 interface KeyboardShortcut {
@@ -35,18 +34,26 @@ interface KeyboardShortcut {
 	ariaLabel: string;
 }
 
+const CURRENT_USER_STORE = CurrentUser.register();
+
 const Header: FunctionComponent< Props > = ( {
 	isEditorSidebarOpened,
 	next,
 	prev,
 	toggleGeneralSidebar,
 	toggleSidebarShortcut,
-	isLoggedIn,
 } ) => {
 	const { domain, siteTitle, siteVertical } = useSelect( select =>
 		select( ONBOARD_STORE ).getState()
 	);
 	const { setDomain } = useDispatch( ONBOARD_STORE );
+	const { createAccount } = useDispatch( CURRENT_USER_STORE );
+	const [ email, setEmail ] = useState( '' );
+
+	const currentUser = useSelect( select => select( CURRENT_USER_STORE ).getCurrentUser() );
+	const newUser = useSelect( select => select( CURRENT_USER_STORE ).getNewUser() );
+	const isLoggedIn = !! currentUser?.ID;
+	const isNewUser = !! newUser;
 
 	const [ domainSearch ] = useDebounce(
 		// If we know a domain, do not search.
@@ -87,6 +94,10 @@ const Header: FunctionComponent< Props > = ( {
 		</span>
 	);
 
+	const createAccountHandler = () => {
+		createAccount( { email } );
+	};
+
 	return (
 		<div
 			className="gutenboarding__header"
@@ -126,6 +137,15 @@ const Header: FunctionComponent< Props > = ( {
 				</div>
 			</div>
 			<div className="gutenboarding__header-section">
+				{ isNewUser && <span> { NO__( 'New user created!' ) } </span> }
+				<TextControl
+					label={ NO__( 'Email address' ) }
+					value={ email }
+					onChange={ newEmail => setEmail( newEmail ) }
+				/>
+				<Button isPrimary isLarge onClick={ createAccountHandler }>
+					{ NO__( 'Create account' ) }
+				</Button>
 				<Link to={ next } className="gutenboarding__header-next-button" isPrimary isLarge>
 					{ NO__( 'Next' ) }
 				</Link>
