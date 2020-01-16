@@ -23,7 +23,7 @@
 
 		"typeRoots": [ "../../node_modules/@types" ],
 		"types": [],
-		"lib": [ "esnext" ]
+		"lib": [ "esnext", "dom" ]
 	},
 	"include": [ "src", "typings" ],
 	"exclude": [ "**/docs/*", "**/test/*" ]
