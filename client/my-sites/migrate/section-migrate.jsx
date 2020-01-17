@@ -258,7 +258,7 @@ class SectionMigrate extends Component {
 					</div>
 					<div className="migrate__sites-item">
 						<Site site={ targetSite } indicator={ false } />
-						<div class="migrate__sites-labels-container">
+						<div className="migrate__sites-labels-container">
 							<span className="migrate__token-label">This site</span>
 						</div>
 					</div>
@@ -479,7 +479,6 @@ class SectionMigrate extends Component {
 						<a href={ this.getImportHref() }>import just your content</a>.
 					</div>
 				</CompactCard>
-				{ this.renderCardBusinessFooter() }
 			</>
 		);
 	}
