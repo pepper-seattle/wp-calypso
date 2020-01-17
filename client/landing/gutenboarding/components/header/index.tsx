@@ -7,6 +7,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import React, { FunctionComponent, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import classnames from 'classnames';
+import config from '../../../../config';
 
 /**
  * Internal dependencies
@@ -19,6 +20,10 @@ import { selectorDebounce } from '../../constants';
 import Link from '../link';
 
 const DOMAIN_SUGGESTIONS_STORE = DomainSuggestions.register();
+const USER_STORE = User.register( {
+	client_id: config( 'wpcom_signup_id' ),
+	client_secret: config( 'wpcom_signup_key' ),
+} );
 
 interface Props {
 	isEditorSidebarOpened: boolean;
@@ -33,8 +38,6 @@ interface KeyboardShortcut {
 	display: string;
 	ariaLabel: string;
 }
-
-const USER_STORE = User.register();
 
 const Header: FunctionComponent< Props > = ( {
 	isEditorSidebarOpened,
