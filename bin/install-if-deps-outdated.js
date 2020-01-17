@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Performs an `npm install`. Since that's a costly operation,
+ * Performs an npm install. Since that's a costly operation,
  * it will only perform it if needed, that is, if the packages
  * installed at `node_modules` aren't in sync over what
  * `package-lock.json` has. For that, modification times of both
@@ -54,6 +54,7 @@ function install() {
 	const installResult = spawnSync( 'npm', [ 'ci' ], {
 		shell: true,
 		stdio: 'inherit',
+		env: Object.assign( { PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true' }, process.env ),
 	} ).status;
 	if ( installResult.status ) {
 		console.error( 'failed to install: %o', installResult );
