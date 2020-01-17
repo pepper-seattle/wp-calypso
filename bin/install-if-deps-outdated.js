@@ -54,7 +54,7 @@ function install() {
 	const installResult = spawnSync( 'npm', [ 'ci' ], {
 		shell: true,
 		stdio: 'inherit',
-		env: Object.assign( { PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true' }, process.env ),
+		env: { PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true', ...process.env },
 	} ).status;
 	if ( installResult.status ) {
 		console.error( 'failed to install: %o', installResult );
