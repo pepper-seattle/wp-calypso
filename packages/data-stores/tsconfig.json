@@ -29,7 +29,10 @@
 		"types": [],
 
 		"noEmitHelpers": true,
-		"importHelpers": true
+		"importHelpers": true,
+
+		"incremental": true,
+		"tsBuildInfoFile": "../../.tsc-cache/.tsbuildinfo-data-stores"
 	},
 	"files": [ "./src/index.ts" ],
 	"exclude": [ "**/docs/*", "**/test/*" ]
