@@ -7,14 +7,12 @@ import { combineReducers } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { ActionType, CurrentUser, NewUser } from './types';
-import * as Actions from './actions';
+import { ActionType, CurrentUser, NewUser, UserAction } from './types';
 
-const currentUser: Reducer<
-	CurrentUser | undefined,
-	| ReturnType< typeof Actions[ 'receiveCurrentUser' ] >
-	| ReturnType< typeof Actions[ 'receiveCurrentUserFailed' ] >
-> = ( state = undefined, action ) => {
+const currentUser: Reducer< CurrentUser | undefined, UserAction > = (
+	state = undefined,
+	action
+) => {
 	switch ( action.type ) {
 		case ActionType.RECEIVE_CURRENT_USER:
 			return action.currentUser;
@@ -24,10 +22,7 @@ const currentUser: Reducer<
 	return state;
 };
 
-const newUser: Reducer< NewUser | undefined, ReturnType< typeof Actions[ 'receiveNewUser' ] > > = (
-	state = undefined,
-	action
-) => {
+const newUser: Reducer< NewUser | undefined, UserAction > = ( state = undefined, action ) => {
 	if ( action.type === ActionType.RECEIVE_NEW_USER ) {
 		const { response } = action;
 		return {
