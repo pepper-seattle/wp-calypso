@@ -18,6 +18,7 @@ export default class WpcomCheckoutErrorBoundary extends React.Component {
 
 	constructor( props ) {
 		super( props );
+		this.props.translate = props.translate;
 	}
 
 	static getDerivedStateFromError( error ): WPCheckoutErrorBoundaryState {
@@ -29,7 +30,9 @@ export default class WpcomCheckoutErrorBoundary extends React.Component {
 
 	render() {
 		if ( this.state.hasError ) {
-			return <h1>{ `Something went wrong in composite-checkout-wpcom.` }</h1>;
+			return (
+				<h1>{ this.props.translate( 'Something went wrong in the billing details step.' ) }</h1>
+			);
 		}
 
 		return this.props.children;
