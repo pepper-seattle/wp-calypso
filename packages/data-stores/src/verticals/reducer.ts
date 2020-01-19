@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { Reducer } from 'redux';
 import { combineReducers } from '@wordpress/data';
 
 /**
@@ -9,12 +8,12 @@ import { combineReducers } from '@wordpress/data';
  */
 import { ActionType, Vertical, VerticalsAction } from './types';
 
-const verticals: Reducer< Vertical[], VerticalsAction > = ( state = [], action ) => {
+function verticals( state: Vertical[] = [], action: VerticalsAction ) {
 	if ( action.type === ActionType.RECEIVE_VERTICALS ) {
 		return action.verticals;
 	}
 	return state;
-};
+}
 
 const reducer = combineReducers( { verticals } );
 
